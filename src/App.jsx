@@ -81,23 +81,41 @@ function App() {
     const elapsed = Date.now() - start;
     const wait = Math.max(0, MIN_VISIBLE_MS - elapsed);
 
-    window.setTimeout(() => {
+    let outerTimerId;
+    let safetyTimerId;
+
+    outerTimerId = window.setTimeout(() => {
       window.__APP_LOADER_SET_PROGRESS__?.(100);
-      
+
       // Step 1: Fade out inner spinner
       loader.classList.add("fade-inner");
-      
+
       // Step 2: Slide up the background panel and reveal main app
       window.setTimeout(() => {
         loader.classList.add("slide-up");
         document.documentElement.classList.add("app-revealed");
-        
+
         // Step 3: Remove loader from DOM after transition completes
         window.setTimeout(() => {
-          loader.remove();
+          if (loader && loader.parentNode) {
+            loader.remove();
+          }
         }, 500);
       }, 200);
+
+      // Safety timeout: ensure loader is removed even if something goes wrong
+      safetyTimerId = window.setTimeout(() => {
+        if (loader && loader.parentNode) {
+          loader.remove();
+          document.documentElement.classList.add("app-revealed");
+        }
+      }, wait + 200 + 500 + 1500); // wait + 2.2s extra
     }, wait);
+
+    return () => {
+      window.clearTimeout(outerTimerId);
+      window.clearTimeout(safetyTimerId);
+    };
   }, []);
 
   const toggleTheme = () => {
