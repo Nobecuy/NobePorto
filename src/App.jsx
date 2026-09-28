@@ -46,7 +46,7 @@ function App() {
   };
 
   useEffect(() => {
-    const sections = ["projects", "learning", "about", "stats"];
+    const sections = ["projects", "learning", "about", "stats", "contact"];
 
     const handleScroll = () => {
       let current = "";
@@ -98,7 +98,7 @@ function App() {
         <About />
       </main>
 
-      <Footer views={null} viewsError={false} />
+      <Footer />
       <Analytics />
     </div>
   );

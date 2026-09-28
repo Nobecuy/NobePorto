@@ -1,6 +1,7 @@
 import { portfolioData } from "../data/portfolioData";
+import Stats from './Stats';
 
-const Footer = ({ views = null, viewsError = false }) => {
+const Footer = () => {
   const { email, whatsapp, whatsappAlt, socials, name } = portfolioData.profile;
   const { philosophy } = portfolioData.about;
   const { siteName } = portfolioData;
@@ -46,8 +47,8 @@ const Footer = ({ views = null, viewsError = false }) => {
       className="scroll-mt-16 border-t border-[var(--color-border)] bg-[var(--color-surface)]"
     >
       <div className="page-wrap py-[var(--spacing-section)]">
-        <Stats views={views} error={viewsError} />
-        <div className="mb-12 max-w-lg">
+        <Stats />
+        <div id="contact" className="scroll-mt-16 mb-12 max-w-lg">
           <p className="section-label mb-3">Contact</p>
           <h2 className="section-title tone-on-scroll mb-3">Mari terhubung.</h2>
           <p className="body-text mb-8">
@@ -101,14 +102,6 @@ const Footer = ({ views = null, viewsError = false }) => {
             <p className="text-sm text-[var(--color-muted)]">
               © {new Date().getFullYear()} {name} · {siteName}
             </p>
-            {!viewsError && (
-              <p className="text-xs text-[var(--color-muted)]">
-                Views:{" "}
-                <span className="tabular-nums text-[var(--color-fg)]">
-                  {views === null ? "—" : views.toLocaleString("id-ID")}
-                </span>
-              </p>
-            )}
           </div>
           <nav className="flex flex-wrap gap-6" aria-label="Social links">
             {links.map((link) => (

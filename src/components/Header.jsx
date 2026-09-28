@@ -48,7 +48,7 @@ const Header = ({ activeSection, theme, onToggleTheme }) => {
             </a>
           ))}
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          <a href="#footer" className="btn-primary !py-2 !text-[0.8125rem]">
+          <a href="#contact" className="btn-primary !py-2 !text-[0.8125rem]">
             Contact
           </a>
         </div>
@@ -85,7 +85,7 @@ const Header = ({ activeSection, theme, onToggleTheme }) => {
               </a>
             ))}
             <a
-              href="#footer"
+              href="#contact"
               className="btn-primary mt-2 w-full"
               onClick={() => setIsMenuOpen(false)}
             >

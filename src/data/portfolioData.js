@@ -3,9 +3,9 @@ export const portfolioData = {
 
   profile: {
     name: "Achmad Nobe Anta Ananda",
-    role: "WEB DEVELOPER & AI-POWERED BUILDER",
+    role: "FRONTEND DEVELOPER & UI BUILDER",
     tagline:
-      "Saya membantu mewujudkan kebutuhan web secara kustom, mulai dari desain antarmuka hingga fungsionalitas utuh dengan memanfaatkan teknologi modern dan alur kerja berbasis AI.",
+      "Saya membangun antarmuka web yang bersih, responsif, dan interaktif menggunakan React, Tailwind CSS, dan alur kerja modern.",
     status: "Learning & building",
     email: "nobedes32@gmail.com",
     whatsapp: "+62 822-4128-8336",
@@ -21,7 +21,7 @@ export const portfolioData = {
 
   about: {
     bio: [
-      "Saya membantu mewujudkan kebutuhan web secara kustom, mulai dari desain antarmuka hingga fungsionalitas utuh dengan memanfaatkan teknologi modern dan alur kerja berbasis AI."
+      "Saya membangun antarmuka web yang bersih, responsif, dan interaktif menggunakan React, Tailwind CSS, dan alur kerja modern."
     ],
     focus:
       "Saat ini fokus pada web development dan integrasi AI, menggunakan alur kerja berbasis AI untuk membangun solusi kustom.",
@@ -50,7 +50,7 @@ export const portfolioData = {
       { name: "React", level: "beginner", percent: 40 },
       { name: "Tailwind CSS", level: "beginner", percent: 40 },
       { name: "Git & GitHub", level: "basic", percent: 50 },
-      { name: "AI & MODERN WORKFLOW", level: "comfortable", percent: 70 },
+      { name: "Tools", level: "comfortable", percent: 70 },
     ],
     levelLabels: {
       comfortable: "Comfortable",

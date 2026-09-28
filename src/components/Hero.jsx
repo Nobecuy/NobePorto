@@ -36,8 +36,8 @@ const Hero = () => {
         <a href="#projects" className="btn-primary">
           Lihat project
         </a>
-        <a href="#learning" className="btn-ghost">
-          Sedang belajar apa
+        <a href="#contact" className="btn-ghost">
+          Mari terhubung
           <IconArrowDown className="opacity-60" />
         </a>
       </div>

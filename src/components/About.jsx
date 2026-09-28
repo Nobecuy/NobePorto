@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { portfolioData } from "../data/portfolioData";
+import meImg from '../img/me.jpeg';
 
 const SkillBar = ({ skill, levelLabel, levelDescription, animate }) => (
   <div className="flex flex-col gap-2">
@@ -75,13 +76,34 @@ const About = () => {
       </header>
 
       <div className="flex flex-col gap-12">
-        <div className="max-w-prose flex flex-col gap-4">
-          {bio.map((paragraph) => (
-            <p key={paragraph.slice(0, 28)} className="body-text">
-              {paragraph}
-            </p>
-          ))}
-          <p className="body-text">{focus}</p>
+        <div className="flex flex-col md:flex md:flex-row md:items-center md:gap-6">
+          <div className="group relative flex-shrink-0 mb-6 md:mb-0 cursor-pointer">
+            {/* Glow background effect behind frame */}
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 blur-lg group-hover:opacity-100 transition-opacity duration-500" />
+
+            {/* Main Photo Frame */}
+            <div className="relative w-44 h-52 md:w-52 md:h-60 p-3 bg-neutral-900/90 border border-white/10 rounded-2xl shadow-2xl -rotate-3 group-hover:rotate-0 group-hover:scale-105 group-hover:border-white/30 transition-all duration-500 ease-out flex flex-col justify-between">
+              <div className="w-full h-[85%] overflow-hidden rounded-xl">
+                <img
+                  src={meImg}
+                  alt="Achmad Nobe"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                />
+              </div>
+              {/* Minimalist Caption / Tape Detail */}
+              <div className="text-center pt-1">
+                <span className="text-[10px] tracking-widest text-neutral-400 font-mono uppercase">Developer</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            {bio.map((paragraph) => (
+              <p key={paragraph.slice(0, 28)} className="body-text">
+                {paragraph}
+              </p>
+            ))}
+            <p className="body-text">{focus}</p>
+          </div>
         </div>
 
         <div>
