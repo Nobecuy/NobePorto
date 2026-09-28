@@ -1,8 +1,34 @@
 import { useEffect, useState } from "react";
 
-const Stats = ({ views, error }) => {
+const Stats = () => {
+  const [views, setViews] = useState(null);
+  const [viewsError, setViewsError] = useState(false);
   const [loadTime, setLoadTime] = useState(0);
 
+  // Fetch visitor count with fallback
+  useEffect(() => {
+    const fetchViews = async () => {
+      try {
+        const res = await fetch('/api/views?increment=0');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (typeof data.views === 'number') {
+          setViews(data.views);
+          setViewsError(false);
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } catch (err) {
+        console.warn('Failed to fetch views, using fallback:', err);
+        setViews(1280); // fallback default
+        setViewsError(true);
+      }
+    };
+
+    fetchViews();
+  }, []);
+
+  // Load time calculation (unchanged)
   useEffect(() => {
     const calculateLoadTime = () => {
       if (typeof window !== "undefined" && window.performance) {
@@ -51,10 +77,10 @@ const Stats = ({ views, error }) => {
           <span className="text-[11px] font-medium text-[var(--color-muted)] uppercase tracking-wider">Total Visitors</span>
           <div className="mt-2 flex flex-col">
             <span className="text-2xl font-bold tracking-tight text-[var(--color-fg)] tabular-nums">
-              {error ? "N/A" : views === null ? "..." : views.toLocaleString("id-ID")}
+              {views === null ? "..." : views.toLocaleString("id-ID")}
             </span>
             <span className="text-[10px] text-emerald-500 font-medium flex items-center gap-1 mt-1">
-              Connected to Vercel Blob
+              {viewsError ? "Using fallback data" : "Connected to Vercel Blob"}
             </span>
           </div>
         </div>
