@@ -3,9 +3,9 @@ export const portfolioData = {
 
   profile: {
     name: "Achmad Nobe Anta Ananda",
-    role: "Frontend Developer in Progress",
+    role: "WEB DEVELOPER & AI-POWERED BUILDER",
     tagline:
-      "Membangun antarmuka web yang responsif dan fungsional, sambil terus mengeksplorasi teknologi modern.",
+      "Saya membantu mewujudkan kebutuhan web secara kustom, mulai dari desain antarmuka hingga fungsionalitas utuh dengan memanfaatkan teknologi modern dan alur kerja berbasis AI.",
     status: "Learning & building",
     email: "nobedes32@gmail.com",
     whatsapp: "+62 822-4128-8336",
@@ -21,12 +21,10 @@ export const portfolioData = {
 
   about: {
     bio: [
-      "Frontend developer in progress. Saya membangun antarmuka web yang fungsional dan mudah digunakan menggunakan HTML, CSS, dan JavaScript.",
-      "Saat ini sedang mendalami React dan Tailwind CSS untuk membuat pengalaman web yang lebih modern dan interaktif.",
-      "Saya percaya kode yang baik adalah kode yang bisa dipahami — baik oleh mesin maupun manusia. Meski masih dalam perjalanan menuju mastery, saya menikmati proses belajar dari setiap project yang dikerjakan, baik yang berhasil maupun yang menjadi pelajaran.",
+      "Saya membantu mewujudkan kebutuhan web secara kustom, mulai dari desain antarmuka hingga fungsionalitas utuh dengan memanfaatkan teknologi modern dan alur kerja berbasis AI."
     ],
     focus:
-      "Saat ini fokus pada frontend development, dengan cita-cita perlahan merambah ke fullstack di masa depan.",
+      "Saat ini fokus pada web development dan integrasi AI, menggunakan alur kerja berbasis AI untuk membangun solusi kustom.",
     philosophy:
       "Progress over perfection. Setiap project — berhasil maupun gagal — adalah catatan pertumbuhan. Saya di sini untuk belajar, membangun, dan berkontribusi.",
     whatIDo: [
@@ -52,6 +50,7 @@ export const portfolioData = {
       { name: "React", level: "beginner", percent: 40 },
       { name: "Tailwind CSS", level: "beginner", percent: 40 },
       { name: "Git & GitHub", level: "basic", percent: 50 },
+      { name: "AI & MODERN WORKFLOW", level: "comfortable", percent: 70 },
     ],
     levelLabels: {
       comfortable: "Comfortable",
@@ -110,7 +109,7 @@ export const portfolioData = {
       tags: ["React", "Vite", "Tailwind"],
       image: "/perspective_architect.png",
       github: "#",
-      demo: "https://pa-arsitek.com/",
+      demo: "https://perspective-architect-web-chi.vercel.app/",
       featured: true,
       year: "2026",
     },

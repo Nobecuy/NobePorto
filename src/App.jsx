@@ -159,7 +159,6 @@ function App() {
         <Projects />
         <Learning />
         <About />
-        <Stats views={views} error={viewsError} />
       </main>
 
       <Footer views={views} viewsError={viewsError} />

@@ -34,13 +34,18 @@ const ProjectCard = ({ project, index, cardRef }) => {
       role={hasDemo ? "link" : undefined}
       tabIndex={hasDemo ? 0 : undefined}
     >
-      <div className="overflow-hidden rounded-[calc(1rem-2px)] bg-[var(--color-bg)]">
+      <div className="browser-mockup">
+        <div className="controls">
+          <div className="control control-red" aria-hidden="true" />
+          <div className="control control-yellow" aria-hidden="true" />
+          <div className="control control-green" aria-hidden="true" />
+        </div>
         <div className="relative aspect-[16/10] overflow-hidden">
           <img
             src={project.image}
             alt={project.title}
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
           />
           {/* Gradient overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

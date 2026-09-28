@@ -36,7 +36,7 @@
   --color-hover: rgb(10 10 10 / 0.03);
   --shadow-elevated: 0 8px 30px rgb(0 0 0 / 0.04);
 
-  --spacing-section: 5.5rem;
+  --spacing-section: 7rem;
   --spacing-page-x: clamp(1.25rem, 4vw, 1.75rem);
 }
 
@@ -226,8 +226,8 @@
     padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-bg);
-    background-color: var(--color-fg);
+    color: var(--color-fg);
+    background-color: var(--color-bg);
     border: none;
     border-radius: 9999px;
     cursor: pointer;
@@ -279,7 +279,7 @@
     padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-fg);
+    color: var(--color-bg);
     background: transparent;
     border: 1px solid var(--color-border);
     border-radius: 9999px;
@@ -469,6 +469,28 @@
       transform: translateY(0);
     }
   }
+
+  .browser-mockup {
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--color-bg);
+  }
+  .browser-mockup .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  .browser-mockup .control {
+    height: 0.375rem;
+    width: 0.375rem;
+    border-radius: 9999px;
+  }
+  .browser-mockup .control-red { background: #ff5f56; }
+  .browser-mockup .control-yellow { background: #ffbd2e; }
+  .browser-mockup .control-green { background: #28c840; }
 
   .animate-slide-down {
     animation: slideDownFade 0.22s ease both;

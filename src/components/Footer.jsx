@@ -46,6 +46,7 @@ const Footer = ({ views = null, viewsError = false }) => {
       className="scroll-mt-16 border-t border-[var(--color-border)] bg-[var(--color-surface)]"
     >
       <div className="page-wrap py-[var(--spacing-section)]">
+        <Stats views={views} error={viewsError} />
         <div className="mb-12 max-w-lg">
           <p className="section-label mb-3">Contact</p>
           <h2 className="section-title tone-on-scroll mb-3">Mari terhubung.</h2>

@@ -6,7 +6,7 @@ const Hero = () => {
   const { bio, focus } = portfolioData.about;
 
   return (
-    <section className="flex flex-col gap-6 pb-[var(--spacing-section)] pt-16 md:pt-20">
+    <section className="flex flex-col gap-8 pb-[var(--spacing-section)] pt-16 md:pt-20">
       <div className="reveal-stagger-item delay-100 flex flex-wrap items-center gap-3">
         <span className="section-label">{role}</span>
         <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
