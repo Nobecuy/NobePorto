@@ -19,6 +19,9 @@ export default async function handler(req, res) {
       // If null, treat as 0
       if (views === null) {
         views = 0;
+      } else {
+        // Ensure views is a number (KV.get returns string)
+        views = Number(views);
       }
     }
 

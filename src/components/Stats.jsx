@@ -15,6 +15,7 @@ const Stats = () => {
           throw new Error(`HTTP ${res.status}`);
         }
         const data = await res.json();
+        console.log('Response views data:', data);
         if (typeof data.views === 'number') {
           setViews(data.views);
           // If the API indicates fallback data, show error state to indicate using fallback
