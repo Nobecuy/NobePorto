@@ -10,17 +10,22 @@ const Stats = () => {
     const fetchViews = async () => {
       try {
         const res = await fetch('/api/views?increment=0');
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        // We treat any non-ok as an error, though our API always returns 200
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
         const data = await res.json();
         if (typeof data.views === 'number') {
           setViews(data.views);
-          setViewsError(false);
+          // If the API indicates fallback data, show error state to indicate using fallback
+          setViewsError(data.fallback === true);
         } else {
           throw new Error('Invalid response format');
         }
       } catch (err) {
         console.warn('Failed to fetch views, using fallback:', err);
-        setViews(1280); // fallback default
+        // On network error or invalid response, set default view count to 1
+        setViews(1);
         setViewsError(true);
       }
     };
