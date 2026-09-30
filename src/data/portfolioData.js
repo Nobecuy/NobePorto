@@ -141,5 +141,19 @@ export const portfolioData = {
       featured: true,
       year: "2026",
     },
+
+    {
+      id: 3,
+      slug: "lumina-studio",
+      title: "Lumina Studio",
+      description:
+        "Landing page Photo Studio premium dengan desain elegant — hero section, pricelist, dan booking experience.",
+      tags: ["React", "Vite", "Tailwind", "GSAP"],
+      image: "/Mock4.jpg",
+      github: "#",
+      demo: "https://lumina-studio-neon.vercel.app/",
+      featured: true,
+      year: "2026",
+    },
   ],
 };
