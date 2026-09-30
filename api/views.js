@@ -1,47 +1,52 @@
-import { head, put } from '@vercel/blob';
+import { list, put } from '@vercel/blob';
 
 export default async function handler(req, res) {
-  if (req.method !== "GET") {
-    res.setHeader("Allow", "GET");
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+  // Matikan semua bentuk cache agar data selalu fresh/real-time
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
-  const increment = req.query?.increment === "1";
+  const BLOB_FILENAME = 'views.json';
 
   try {
-    let views = 0;
+    // Cari file di blob store
+    const { blobs } = await list({ prefix: BLOB_FILENAME });
+    const existingBlob = blobs.find((b) => b.pathname === BLOB_FILENAME);
 
-    // Check if views.json exists
-    try {
-      const { url } = await head('views.json');
-      const response = await fetch(url, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Failed to fetch blob');
-      const json = await response.json();
-      views = json.views ?? 0;
-    } catch (headErr) {
-      // If head fails, assume file doesn't exist yet, views = 0
-      views = 0;
+    let currentViews = 0;
+
+    if (existingBlob) {
+      // Ambil data dengan menyertakan header authorization token dari Vercel
+      const blobResponse = await fetch(existingBlob.url, {
+        headers: {
+          Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
+        },
+        cache: 'no-store',
+      });
+
+      if (blobResponse.ok) {
+        const data = await blobResponse.json();
+        currentViews = typeof data.views === 'number' ? data.views : 0;
+      }
     }
 
-    if (increment) {
-      views += 1;
+    // Jika ada query ?increment=1
+    if (req.query.increment === '1' || req.query.increment === 'true') {
+      currentViews += 1;
     }
 
-    // Save back
-    await put('views.json', JSON.stringify({ views }), { access: 'private', addRandomSuffix: false });
+    // Simpan kembali ke Blob Store (private mode)
+    await put(BLOB_FILENAME, JSON.stringify({ views: currentViews }), {
+      access: 'private',
+      addRandomSuffix: false,
+      contentType: 'application/json',
+    });
 
-    // Set CORS headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-    return res.status(200).json({ views });
-  } catch (err) {
-    console.error('Blob views error:', err);
-    // Fallback to realistic default, e.g., 1
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    return res.status(200).json({ views: 1 });
+    return res.status(200).json({ views: currentViews });
+  } catch (error) {
+    console.error('Blob view counter error:', error);
+    // Jika benar-benar gagal, kembalikan status 500/error log agar tidak menyamarkan nilai 1
+    return res.status(500).json({ error: error.message });
   }
 }
