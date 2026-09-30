@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       }
 
       await put(VIEWS_PATH, JSON.stringify({ views: currentViews }), {
-        access: "public",
+        access: "private",
         contentType: "application/json",
         addRandomSuffix: false,
       });
@@ -50,9 +50,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ views: currentViews });
   } catch (err) {
     console.error("Blob views error:", err);
-    return res.status(500).json({
-      error: "BLOB_ERROR",
-      message: err.message,
-    });
+    return res.status(200).json({ views: 0 });
   }
 }
