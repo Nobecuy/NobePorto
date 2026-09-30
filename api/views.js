@@ -1,52 +1,32 @@
-import { list, put } from '@vercel/blob';
+import { Redis } from '@upstash/redis';
+
+// Menggunakan environment variables yang dikoneksikan oleh Upstash
+const redis = Redis.fromEnv();
 
 export default async function handler(req, res) {
-  // Matikan semua bentuk cache agar data selalu fresh/real-time
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
   res.setHeader('Access-Control-Allow-Origin', '*');
 
-  const BLOB_FILENAME = 'views.json';
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
   try {
-    // Cari file di blob store
-    const { blobs } = await list({ prefix: BLOB_FILENAME });
-    const existingBlob = blobs.find((b) => b.pathname === BLOB_FILENAME);
+    const isIncrement = req.query.increment === '1' || req.query.increment === 'true';
+    let views = 0;
 
-    let currentViews = 0;
-
-    if (existingBlob) {
-      // Ambil data dengan menyertakan header authorization token dari Vercel
-      const blobResponse = await fetch(existingBlob.url, {
-        headers: {
-          Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
-        },
-        cache: 'no-store',
-      });
-
-      if (blobResponse.ok) {
-        const data = await blobResponse.json();
-        currentViews = typeof data.views === 'number' ? data.views : 0;
-      }
+    if (isIncrement) {
+      // Tambah count secara real-time (+1)
+      views = await redis.incr('portfolio_views');
+    } else {
+      views = (await redis.get('portfolio_views')) || 0;
     }
 
-    // Jika ada query ?increment=1
-    if (req.query.increment === '1' || req.query.increment === 'true') {
-      currentViews += 1;
-    }
-
-    // Simpan kembali ke Blob Store (private mode)
-    await put(BLOB_FILENAME, JSON.stringify({ views: currentViews }), {
-      access: 'private',
-      addRandomSuffix: false,
-      contentType: 'application/json',
-    });
-
-    return res.status(200).json({ views: currentViews });
+    return res.status(200).json({ views: Number(views) });
   } catch (error) {
-    console.error('Blob view counter error:', error);
-    // Jika benar-benar gagal, kembalikan status 500/error log agar tidak menyamarkan nilai 1
+    console.error('Redis Error:', error);
     return res.status(500).json({ error: error.message });
   }
 }
