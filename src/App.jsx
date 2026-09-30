@@ -83,6 +83,31 @@ function App() {
     };
   }, []);
 
+  // Increment visitor count on each visit (once per session to avoid overcounting in dev)
+  useEffect(() => {
+    // Only run on client side
+    if (typeof window === "undefined") return;
+
+    // Use sessionStorage to count only once per session
+    const hasCounted = sessionStorage.getItem("hasCountedView");
+    if (hasCounted) return;
+
+    // Increment the view count
+    fetch("/api/views?increment=1")
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        // Optionally update local state if needed, but Stats component will fetch latest
+        console.log("View incremented:", data.views);
+        sessionStorage.setItem("hasCountedView", "true");
+      })
+      .catch((err) => {
+        console.warn("Failed to increment view count:", err);
+      });
+  }, []); // Empty deps to run once on mount
+
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)]">
       <Header
