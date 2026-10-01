@@ -155,5 +155,18 @@ export const portfolioData = {
       featured: true,
       year: "2026",
     },
+    {
+      id: 4,
+      slug: "Kroma",
+      title: "Kroma Cafe",
+      description:
+        "Landing page Cafe dengan desain elegant — hero section, pricelist, dan ambience.",
+      tags: ["React", "Vite", "Tailwind"],
+      image: "/cafe.png",
+      github: "#",
+      demo: "https://cafe-example-mu.vercel.app/",
+      featured: true,
+      year: "2026",
+    },
   ],
 };
