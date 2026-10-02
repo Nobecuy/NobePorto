@@ -43,7 +43,7 @@ const ProjectCard = ({ project, index, cardRef }) => {
         <div className="relative aspect-[16/10] overflow-hidden">
           <img
             src={project.image}
-            alt={project.title}
+            alt={`Portofolio buatan Achmad Nobe`}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
           />
