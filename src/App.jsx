@@ -6,6 +6,7 @@ import Projects from "./components/Projects";
 import Learning from "./components/Learning";
 import About from "./components/About";
 import Footer from "./components/Footer";
+import BackToTop from "./components/BackToTop";
 import { Analytics } from "@vercel/analytics/react";
 
 const THEME_STORAGE_KEY = "theme";
@@ -145,6 +146,7 @@ function App() {
       </main>
 
       <Footer />
+      <BackToTop />
       <Analytics />
     </div>
   );
