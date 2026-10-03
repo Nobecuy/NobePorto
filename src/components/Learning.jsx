@@ -46,7 +46,7 @@ const Learning = () => {
         ))}
       </div>
 
-      <div>
+      <div className="mb-8">
         <p className="section-label mb-4">Next up</p>
         <ol className="flex flex-col gap-3">
           {nextGoals.map((goal, index) => (
@@ -64,7 +64,7 @@ const Learning = () => {
       </div>
       
       {/* Gradient Divider */}
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mt-8" />
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     </section>
   );
 };

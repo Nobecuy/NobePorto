@@ -8,12 +8,14 @@ const Footer = () => {
   const { philosophy } = portfolioData.about;
   const { siteName } = portfolioData;
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
+      setToastMessage("Email copied to clipboard! ✨");
       setShowToast(true);
     } catch (err) {
       console.error("Failed to copy email:", err);
@@ -29,8 +31,8 @@ const Footer = () => {
     setIsSubmitting(true);
     
     try {
-      // Using Formspree endpoint - replace with your actual endpoint
-      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      // Using Formspree with actual email endpoint
+      const response = await fetch("https://formspree.io/f/xnnqkjaq", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -38,11 +40,16 @@ const Footer = () => {
       
       if (response.ok) {
         setFormData({ name: "", email: "", message: "" });
+        setToastMessage("Message sent successfully! 🎉");
         setShowToast(true);
-        // You can add a different toast message for form submission
+      } else {
+        setToastMessage("Failed to send message. Please try again.");
+        setShowToast(true);
       }
     } catch (error) {
       console.error("Form submission error:", error);
+      setToastMessage("Failed to send message. Please try again.");
+      setShowToast(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -244,7 +251,7 @@ const Footer = () => {
       </div>
       
       <Toast 
-        message="Email copied to clipboard! ✨" 
+        message={toastMessage} 
         isVisible={showToast} 
         onClose={() => setShowToast(false)} 
       />
