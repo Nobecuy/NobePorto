@@ -189,10 +189,12 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
                   transition={{ delay: (index * 0.1) + (idx * 0.1), type: "spring", stiffness: 200 }}
                   className={`text-[10px] px-2 py-0.5 rounded-full border backdrop-blur-md ${
                     badge.type === 'ai' 
-                      ? 'bg-emerald-500/20 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 dark:border-emerald-500/20' 
+                      ? 'bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-500/30' 
                       : badge.type === 'speed'
-                        ? 'bg-blue-500/20 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30 dark:border-blue-500/20'
-                        : 'bg-zinc-200 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border-zinc-300 dark:border-white/10'
+                        ? 'bg-sky-100 text-sky-800 border-sky-300 dark:bg-sky-950/60 dark:text-sky-400 dark:border-sky-500/30'
+                        : badge.type === 'feature'
+                          ? 'bg-violet-100 text-violet-800 border-violet-300 dark:bg-violet-950/60 dark:text-violet-400 dark:border-violet-500/30'
+                          : 'bg-zinc-200 text-zinc-700 border-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700'
                   }`}
                 >
                   {badge.text}
