@@ -112,7 +112,7 @@ const About = () => {
             {whatIDo.map((item, index) => (
               <li
                 key={item.title}
-                className="card-surface fade-in-reveal rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1"
+                className="card-surface fade-in-reveal rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-zinc-300 dark:hover:border-white/30 hover:bg-white dark:hover:bg-zinc-900/60 hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1"
                 style={{ "--reveal-delay": `${index * 90}ms` }}
               >
                 <h4 className="mb-2 text-sm font-semibold text-[var(--color-fg)]">
@@ -137,7 +137,7 @@ const About = () => {
             {skills.map((skill, index) => (
               <div 
                 key={skill.name}
-                className="rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+                className="rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-zinc-300 dark:hover:border-white/30 hover:bg-white dark:hover:bg-zinc-900/60 hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
               >
                 <SkillBar
                   skill={skill}

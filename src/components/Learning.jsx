@@ -22,7 +22,7 @@ const Learning = () => {
         {currentlyLearning.map((block, index) => (
           <div
             key={block.topic}
-            className="card-surface fade-in-reveal rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+            className="card-surface fade-in-reveal rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-zinc-300 dark:hover:border-white/30 hover:bg-white dark:hover:bg-zinc-900/60 hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
             style={{ "--reveal-delay": `${index * 90}ms` }}
           >
             <h3 className="mb-3 text-sm font-semibold text-[var(--color-fg)]">
@@ -32,7 +32,7 @@ const Learning = () => {
               {block.items.map((item) => (
                 <li
                   key={item}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-zinc-300 transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white/10"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/5 px-3 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 transition-all duration-300 hover:scale-105 hover:border-zinc-300 dark:hover:border-white/30 hover:bg-zinc-200 dark:hover:bg-white/10"
                 >
                   <span
                     className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"
@@ -64,7 +64,7 @@ const Learning = () => {
       </div>
       
       {/* Gradient Divider */}
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-300 dark:via-white/10 to-transparent" />
     </section>
   );
 };

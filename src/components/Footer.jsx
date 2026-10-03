@@ -136,7 +136,7 @@ const Footer = () => {
                     </a>
                     <button
                       onClick={handleCopyEmail}
-                      className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-zinc-900/40 px-2 py-1 text-xs font-medium text-zinc-300 backdrop-blur-md transition-all hover:border-white/30 hover:bg-zinc-900/60"
+                      className="inline-flex items-center gap-1 rounded-lg border border-zinc-300 dark:border-white/10 bg-zinc-100 dark:bg-zinc-900/40 px-2 py-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 backdrop-blur-md transition-all hover:border-zinc-400 dark:hover:border-white/30 hover:bg-zinc-200 dark:hover:bg-zinc-900/60"
                       aria-label="Copy email to clipboard"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,7 +172,7 @@ const Footer = () => {
                   onChange={handleFormChange}
                   placeholder="Your Name"
                   required
-                  className="w-full rounded-xl border border-white/10 bg-zinc-900/40 px-4 py-3 text-sm text-white placeholder-zinc-500 backdrop-blur-md transition-all focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/10"
+                  className="w-full rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-100 dark:bg-zinc-900/40 px-4 py-3 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-500 dark:placeholder:text-zinc-400 backdrop-blur-md transition-all focus:border-zinc-500 dark:focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-white/10"
                 />
               </div>
               <div>
@@ -183,7 +183,7 @@ const Footer = () => {
                   onChange={handleFormChange}
                   placeholder="Your Email"
                   required
-                  className="w-full rounded-xl border border-white/10 bg-zinc-900/40 px-4 py-3 text-sm text-white placeholder-zinc-500 backdrop-blur-md transition-all focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/10"
+                  className="w-full rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-100 dark:bg-zinc-900/40 px-4 py-3 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-500 dark:placeholder:text-zinc-400 backdrop-blur-md transition-all focus:border-zinc-500 dark:focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-white/10"
                 />
               </div>
               <div>
@@ -194,13 +194,13 @@ const Footer = () => {
                   placeholder="Your Message"
                   required
                   rows={4}
-                  className="w-full rounded-xl border border-white/10 bg-zinc-900/40 px-4 py-3 text-sm text-white placeholder-zinc-500 backdrop-blur-md transition-all focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/10 resize-none"
+                  className="w-full rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-100 dark:bg-zinc-900/40 px-4 py-3 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-500 dark:placeholder:text-zinc-400 backdrop-blur-md transition-all focus:border-zinc-500 dark:focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-white/10 resize-none"
                 />
               </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white backdrop-blur-md transition-all hover:border-white/40 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-300 dark:border-white/20 bg-zinc-200 dark:bg-white/5 px-6 py-3 text-sm font-medium text-zinc-900 dark:text-white backdrop-blur-md transition-all hover:border-zinc-400 dark:hover:border-white/40 hover:bg-zinc-300 dark:hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>

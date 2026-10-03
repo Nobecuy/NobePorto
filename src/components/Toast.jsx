@@ -21,7 +21,7 @@ const Toast = ({ message, isVisible, onClose }) => {
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
         >
-          <div className="bg-zinc-900 border border-white/20 text-white rounded-xl px-4 py-2 shadow-2xl backdrop-blur-md flex items-center gap-2">
+          <div className="bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-white/20 text-zinc-900 dark:text-white rounded-xl px-4 py-2 shadow-2xl backdrop-blur-md flex items-center gap-2">
             <span className="text-sm font-medium">{message}</span>
           </div>
         </motion.div>

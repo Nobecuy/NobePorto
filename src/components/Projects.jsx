@@ -132,9 +132,9 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
-      className={`relative bg-zinc-900/60 backdrop-blur-lg border border-white/20 rounded-2xl p-5 shadow-2xl ${
+      className={`relative bg-white/80 dark:bg-zinc-900/60 backdrop-blur-lg border border-zinc-200 dark:border-white/20 rounded-2xl p-5 shadow-2xl ${
         hasDemo && !isMobile ? "cursor-grab active:cursor-grabbing" : hasDemo ? "cursor-pointer" : "cursor-default"
-      } ${isHovered ? "border-white/40" : ""}`}
+      } ${isHovered ? "border-zinc-300 dark:border-white/40" : ""}`}
       style={{
         touchAction: isMobile ? "pan-y" : "none", // Allow vertical scroll on mobile
       }}
@@ -144,7 +144,7 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: isDragging ? 1 : 0 }}
-          className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-zinc-400 bg-zinc-900/80 px-3 py-1 rounded-full border border-white/10"
+          className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900/80 px-3 py-1 rounded-full border border-zinc-300 dark:border-white/10"
         >
           🎯 Dragging...
         </motion.div>
@@ -178,7 +178,7 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
         <div className="flex items-start justify-between gap-4">
           <div className="flex min-w-0 flex-col gap-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-medium tabular-nums text-zinc-400">
+              <span className="text-xs font-medium tabular-nums text-zinc-600 dark:text-zinc-400">
                 {String(index + 1).padStart(2, "0")} · {project.year}
               </span>
               {project.badges && project.badges.map((badge, idx) => (
@@ -189,17 +189,17 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
                   transition={{ delay: (index * 0.1) + (idx * 0.1), type: "spring", stiffness: 200 }}
                   className={`text-[10px] px-2 py-0.5 rounded-full border backdrop-blur-md ${
                     badge.type === 'ai' 
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                      ? 'bg-emerald-500/20 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 dark:border-emerald-500/20' 
                       : badge.type === 'speed'
-                        ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                        : 'bg-white/5 text-zinc-300 border-white/10'
+                        ? 'bg-blue-500/20 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30 dark:border-blue-500/20'
+                        : 'bg-zinc-200 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border-zinc-300 dark:border-white/10'
                   }`}
                 >
                   {badge.text}
                 </motion.span>
               ))}
             </div>
-            <h3 className="text-base font-semibold tracking-tight text-white">
+            <h3 className="text-base font-semibold tracking-tight text-zinc-900 dark:text-white">
               {project.title}
             </h3>
           </div>
@@ -207,14 +207,14 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
             <motion.span
               whileHover={{ scale: 1.2, rotate: 45 }}
               transition={{ type: "spring", stiffness: 400 }}
-              className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/20 text-zinc-300 bg-white/5"
+              className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-zinc-300 dark:border-white/20 text-zinc-600 dark:text-zinc-300 bg-zinc-100 dark:bg-white/5"
             >
               <IconArrowUpRight />
             </motion.span>
           )}
         </div>
 
-        <p className="text-zinc-300 text-sm line-clamp-2">{project.description}</p>
+        <p className="text-zinc-600 dark:text-zinc-300 text-sm line-clamp-2">{project.description}</p>
 
         <div className="flex flex-wrap gap-1.5 mt-1">
           {project.tags.slice(0, 3).map((tag, idx) => (
@@ -224,7 +224,7 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: (index * 0.1) + (idx * 0.05) }}
               whileHover={{ scale: 1.05 }}
-              className="bg-white/5 border border-white/10 text-xs px-2 py-0.5 rounded-full text-zinc-300"
+              className="bg-zinc-200 dark:bg-white/5 border border-zinc-300 dark:border-white/10 text-xs px-2 py-0.5 rounded-full text-zinc-700 dark:text-zinc-300"
             >
               {tag}
             </motion.span>
