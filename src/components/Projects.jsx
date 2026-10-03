@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { portfolioData } from "../data/portfolioData";
@@ -8,6 +8,16 @@ import { IconArrowUpRight } from "./Icons";
 gsap.registerPlugin(ScrollTrigger);
 
 const VISIBLE_COUNT = 3;
+
+// Scatter positions and rotations for each card
+const scatterConfig = [
+  { rotate: -3, x: 0, y: 0 },
+  { rotate: 4, x: 20, y: -10 },
+  { rotate: -2, x: -15, y: 5 },
+  { rotate: 5, x: 10, y: -8 },
+  { rotate: -4, x: -20, y: 12 },
+  { rotate: 3, x: 15, y: -5 },
+];
 
 /* ─── Magnetic Button Component ─────────────────────────────── */
 const MagneticButton = ({ children, onClick, className }) => {
@@ -56,169 +66,151 @@ const MagneticButton = ({ children, onClick, className }) => {
   );
 };
 
-/* ─── 3D Tilt Card Component ─────────────────────────────────── */
-const TiltCard = ({ children, project, index, cardRef }) => {
-  const ref = useRef(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
+/* ─── Scatter Card Component (Interactive Photo Grid) ─────────────────────── */
+const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
+  const hasDemo = project.demo && project.demo !== "#";
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleMouseMove = (e) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateXValue = ((y - centerY) / centerY) * -10;
-    const rotateYValue = ((x - centerX) / centerX) * 10;
-
-    setRotateX(rotateXValue);
-    setRotateY(rotateYValue);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
+  const handleClick = () => {
+    if (hasDemo && !isDragging) window.open(project.demo, "_blank", "noopener,noreferrer");
   };
 
   return (
-    <motion.div
-      ref={ref}
-      style={{
-        transformStyle: "preserve-3d",
-        perspective: 1000,
+    <motion.article
+      ref={cardRef}
+      drag
+      dragConstraints={{ left: -100, right: 100, top: -100, bottom: 100 }}
+      dragElastic={0.1}
+      dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+      onDragStart={() => setIsDragging(true)}
+      onDragEnd={() => setTimeout(() => setIsDragging(false), 100)}
+      initial={{
+        opacity: 0,
+        scale: 0.8,
+        rotate: scatterPosition.rotate,
+        x: scatterPosition.x,
+        y: scatterPosition.y,
       }}
       animate={{
-        rotateX,
-        rotateY,
+        opacity: 1,
+        scale: 1,
+        rotate: isHovered ? 0 : scatterPosition.rotate,
+        x: scatterPosition.x,
+        y: scatterPosition.y,
+      }}
+      whileHover={{
+        scale: 1.05,
+        zIndex: 50,
+        boxShadow: "0 0 40px rgba(255,255,255,0.15)",
       }}
       transition={{
         type: "spring",
-        stiffness: 100,
-        damping: 15,
+        stiffness: 300,
+        damping: 20,
+        delay: index * 0.1,
       }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleClick}
+      className={`relative bg-zinc-900/60 backdrop-blur-lg border border-white/20 rounded-2xl p-5 shadow-2xl ${
+        hasDemo ? "cursor-grab active:cursor-grabbing" : "cursor-default"
+      } ${isHovered ? "border-white/40" : ""}`}
+      style={{
+        touchAction: "none",
+      }}
     >
-      <div ref={cardRef}>{children}</div>
-    </motion.div>
-  );
-};
-
-/* ─── Project Card ─────────────────────────────────────────── */
-const ProjectCard = ({ project, index, cardRef }) => {
-  const hasDemo = project.demo && project.demo !== "#";
-
-  const handleClick = () => {
-    if (hasDemo) window.open(project.demo, "_blank", "noopener,noreferrer");
-  };
-
-  const handleKeyDown = (e) => {
-    if (hasDemo && (e.key === "Enter" || e.key === " ")) {
-      e.preventDefault();
-      handleClick();
-    }
-  };
-
-  return (
-    <TiltCard project={project} index={index} cardRef={cardRef}>
-      <motion.article
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.4 }}
-        className={`group bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 ${
-          hasDemo ? "cursor-pointer" : ""
-        }`}
-        onClick={hasDemo ? handleClick : undefined}
-        onKeyDown={hasDemo ? handleKeyDown : undefined}
-        role={hasDemo ? "link" : undefined}
-        tabIndex={hasDemo ? 0 : undefined}
+      {/* Drag Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isDragging ? 1 : 0 }}
+        className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-zinc-400 bg-zinc-900/80 px-3 py-1 rounded-full border border-white/10"
       >
-        <div className="browser-mockup mb-4">
-          <div className="controls">
-            <div className="control control-red" aria-hidden="true" />
-            <div className="control control-yellow" aria-hidden="true" />
-            <div className="control control-green" aria-hidden="true" />
-          </div>
-          <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
-            <motion.img
-              src={project.image}
-              alt={`Portofolio buatan Achmad Nobe`}
-              loading="lazy"
-              className="h-full w-full object-cover"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            />
-            {/* Gradient overlay on hover */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-        </div>
+        🎯 Dragging...
+      </motion.div>
 
-        <div className="flex flex-col gap-3">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex min-w-0 flex-col gap-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-medium tabular-nums text-zinc-400">
-                  {String(index + 1).padStart(2, "0")} · {project.year}
-                </span>
-                {project.badges && project.badges.map((badge, idx) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: idx * 0.1, type: "spring", stiffness: 200 }}
-                    className={`text-[10px] px-2 py-0.5 rounded-full border backdrop-blur-md ${
-                      badge.type === 'ai' 
-                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
-                        : badge.type === 'speed'
-                          ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                          : 'bg-white/5 text-zinc-300 border-white/10'
-                    }`}
-                  >
-                    {badge.text}
-                  </motion.span>
-                ))}
-              </div>
-              <h3 className="tone-on-scroll text-lg font-semibold tracking-tight transition-colors group-hover:text-white">
-                {project.title}
-              </h3>
+      <div className="browser-mockup mb-4">
+        <div className="controls">
+          <div className="control control-red" aria-hidden="true" />
+          <div className="control control-yellow" aria-hidden="true" />
+          <div className="control control-green" aria-hidden="true" />
+        </div>
+        <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
+          <motion.img
+            src={project.image}
+            alt={`Portfolio ${project.title}`}
+            loading="lazy"
+            className="h-full w-full object-cover"
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          />
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex min-w-0 flex-col gap-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-medium tabular-nums text-zinc-400">
+                {String(index + 1).padStart(2, "0")} · {project.year}
+              </span>
+              {project.badges && project.badges.map((badge, idx) => (
+                <motion.span
+                  key={idx}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: (index * 0.1) + (idx * 0.1), type: "spring", stiffness: 200 }}
+                  className={`text-[10px] px-2 py-0.5 rounded-full border backdrop-blur-md ${
+                    badge.type === 'ai' 
+                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                      : badge.type === 'speed'
+                        ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                        : 'bg-white/5 text-zinc-300 border-white/10'
+                  }`}
+                >
+                  {badge.text}
+                </motion.span>
+              ))}
             </div>
-            {hasDemo && (
-              <motion.span
-                whileHover={{ scale: 1.1, rotate: 45 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-all group-hover:border-white/30 group-hover:bg-white/10 group-hover:text-white"
-              >
-                <IconArrowUpRight />
-              </motion.span>
-            )}
+            <h3 className="text-base font-semibold tracking-tight text-white">
+              {project.title}
+            </h3>
           </div>
-
-          <p className="text-zinc-300 text-sm">{project.description}</p>
-
-          <div className="flex flex-wrap gap-1.5 mt-2">
-            {project.tags.map((tag, idx) => (
-              <motion.span
-                key={tag}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.05 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/5 border border-white/10 text-xs px-2.5 py-1 rounded-full text-zinc-300"
-              >
-                {tag}
-              </motion.span>
-            ))}
-          </div>
+          {hasDemo && (
+            <motion.span
+              whileHover={{ scale: 1.2, rotate: 45 }}
+              transition={{ type: "spring", stiffness: 400 }}
+              className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/20 text-zinc-300 bg-white/5"
+            >
+              <IconArrowUpRight />
+            </motion.span>
+          )}
         </div>
-      </motion.article>
-    </TiltCard>
+
+        <p className="text-zinc-300 text-sm line-clamp-2">{project.description}</p>
+
+        <div className="flex flex-wrap gap-1.5 mt-1">
+          {project.tags.slice(0, 3).map((tag, idx) => (
+            <motion.span
+              key={tag}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: (index * 0.1) + (idx * 0.05) }}
+              whileHover={{ scale: 1.05 }}
+              className="bg-white/5 border border-white/10 text-xs px-2 py-0.5 rounded-full text-zinc-300"
+            >
+              {tag}
+            </motion.span>
+          ))}
+        </div>
+      </div>
+    </motion.article>
   );
 };
 
@@ -360,29 +352,42 @@ const Projects = () => {
       id="projects"
       className="scroll-mt-16 pb-[var(--spacing-section)]"
     >
-      {/* ── Header ─── */}
+      {/* ── Header with Interactive Badge ─── */}
       <header
         ref={headerRef}
         className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         style={{ opacity: 0 }}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap">
           <h2 className="section-title tone-on-scroll !mb-0">Projects</h2>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-zinc-300 backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             6 Selected Works
           </div>
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs text-purple-300 backdrop-blur-md"
+          >
+            <span className="text-sm">✨</span>
+            Interactive Scatter Canvas
+          </motion.div>
         </div>
       </header>
 
-      {/* ── Cards Grid ─── */}
-      <div ref={gridRef} className="flex flex-col gap-5">
+      {/* ── Scatter Grid Canvas ─── */}
+      <div 
+        ref={gridRef} 
+        className="relative min-h-[600px] w-full"
+      >
         {visibleProjects.map((project, index) => (
-          <ProjectCard
+          <ScatterCard
             key={project.id}
             project={project}
             index={index}
             cardRef={(el) => (cardRefs.current[index] = el)}
+            scatterPosition={scatterConfig[index % scatterConfig.length]}
           />
         ))}
       </div>
