@@ -10,13 +10,15 @@ gsap.registerPlugin(ScrollTrigger);
 const VISIBLE_COUNT = 3;
 
 // Scatter positions and rotations for each card
+// Desktop: more dramatic scatter effect
+// Mobile: minimal rotation for cleaner stack layout
 const scatterConfig = [
-  { rotate: -3, x: 0, y: 0 },
-  { rotate: 4, x: 20, y: -10 },
-  { rotate: -2, x: -15, y: 5 },
-  { rotate: 5, x: 10, y: -8 },
-  { rotate: -4, x: -20, y: 12 },
-  { rotate: 3, x: 15, y: -5 },
+  { rotate: -3, x: 0, y: 0, rotateMobile: -1 },
+  { rotate: 4, x: 20, y: -10, rotateMobile: 1 },
+  { rotate: -2, x: -15, y: 5, rotateMobile: -0.5 },
+  { rotate: 5, x: 10, y: -8, rotateMobile: 0.5 },
+  { rotate: -4, x: -20, y: 12, rotateMobile: -1 },
+  { rotate: 3, x: 15, y: -5, rotateMobile: 1 },
 ];
 
 /* ─── Magnetic Button Component ─────────────────────────────── */
@@ -71,15 +73,32 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
   const hasDemo = project.demo && project.demo !== "#";
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleClick = () => {
     if (hasDemo && !isDragging) window.open(project.demo, "_blank", "noopener,noreferrer");
   };
 
+  // Use mobile-specific rotation if on mobile
+  const rotationValue = isMobile ? scatterPosition.rotateMobile : scatterPosition.rotate;
+  const positionX = isMobile ? 0 : scatterPosition.x;
+  const positionY = isMobile ? 0 : scatterPosition.y;
+
   return (
     <motion.article
       ref={cardRef}
-      drag
+      drag={!isMobile} // Disable drag on mobile
       dragConstraints={{ left: -100, right: 100, top: -100, bottom: 100 }}
       dragElastic={0.1}
       dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
@@ -88,19 +107,19 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
       initial={{
         opacity: 0,
         scale: 0.8,
-        rotate: scatterPosition.rotate,
-        x: scatterPosition.x,
-        y: scatterPosition.y,
+        rotate: rotationValue,
+        x: positionX,
+        y: positionY,
       }}
       animate={{
         opacity: 1,
         scale: 1,
-        rotate: isHovered ? 0 : scatterPosition.rotate,
-        x: scatterPosition.x,
-        y: scatterPosition.y,
+        rotate: isHovered ? 0 : rotationValue,
+        x: positionX,
+        y: positionY,
       }}
       whileHover={{
-        scale: 1.05,
+        scale: isMobile ? 1 : 1.05, // Disable scale on mobile
         zIndex: 50,
         boxShadow: "0 0 40px rgba(255,255,255,0.15)",
       }}
@@ -114,20 +133,22 @@ const ScatterCard = ({ project, index, cardRef, scatterPosition }) => {
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
       className={`relative bg-zinc-900/60 backdrop-blur-lg border border-white/20 rounded-2xl p-5 shadow-2xl ${
-        hasDemo ? "cursor-grab active:cursor-grabbing" : "cursor-default"
+        hasDemo && !isMobile ? "cursor-grab active:cursor-grabbing" : hasDemo ? "cursor-pointer" : "cursor-default"
       } ${isHovered ? "border-white/40" : ""}`}
       style={{
-        touchAction: "none",
+        touchAction: isMobile ? "pan-y" : "none", // Allow vertical scroll on mobile
       }}
     >
-      {/* Drag Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isDragging ? 1 : 0 }}
-        className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-zinc-400 bg-zinc-900/80 px-3 py-1 rounded-full border border-white/10"
-      >
-        🎯 Dragging...
-      </motion.div>
+      {/* Drag Indicator - Hidden on mobile */}
+      {!isMobile && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isDragging ? 1 : 0 }}
+          className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-zinc-400 bg-zinc-900/80 px-3 py-1 rounded-full border border-white/10"
+        >
+          🎯 Dragging...
+        </motion.div>
+      )}
 
       <div className="browser-mockup mb-4">
         <div className="controls">
@@ -368,7 +389,7 @@ const Projects = () => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs text-purple-300 backdrop-blur-md"
+            className="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs text-purple-300 backdrop-blur-md"
           >
             <span className="text-sm">✨</span>
             Interactive Scatter Canvas
@@ -379,7 +400,7 @@ const Projects = () => {
       {/* ── Scatter Grid Canvas ─── */}
       <div 
         ref={gridRef} 
-        className="relative min-h-[600px] w-full"
+        className="relative min-h-[600px] md:min-h-[600px] w-full flex flex-col gap-6 md:block"
       >
         {visibleProjects.map((project, index) => (
           <ScatterCard
