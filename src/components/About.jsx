@@ -112,7 +112,7 @@ const About = () => {
             {whatIDo.map((item, index) => (
               <li
                 key={item.title}
-                className="card-surface fade-in-reveal rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5"
+                className="card-surface fade-in-reveal rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1"
                 style={{ "--reveal-delay": `${index * 90}ms` }}
               >
                 <h4 className="mb-2 text-sm font-semibold text-[var(--color-fg)]">
@@ -133,15 +133,19 @@ const About = () => {
               Hover label level untuk penjelasan
             </p>
           </div>
-          <div className="flex flex-col gap-5">
-            {skills.map((skill) => (
-              <SkillBar
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {skills.map((skill, index) => (
+              <div 
                 key={skill.name}
-                skill={skill}
-                levelLabel={levelLabels[skill.level]}
-                levelDescription={levelDescriptions[skill.level]}
-                animate={animateSkills}
-              />
+                className="rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+              >
+                <SkillBar
+                  skill={skill}
+                  levelLabel={levelLabels[skill.level]}
+                  levelDescription={levelDescriptions[skill.level]}
+                  animate={animateSkills}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -152,6 +156,9 @@ const About = () => {
           </p>
         </blockquote>
       </div>
+      
+      {/* Gradient Divider */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mt-8" />
     </section>
   );
 };

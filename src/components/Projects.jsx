@@ -472,6 +472,9 @@ const Projects = () => {
           </MagneticButton>
         </div>
       )}
+      
+      {/* Gradient Divider */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mt-12" />
     </section>
   );
 };

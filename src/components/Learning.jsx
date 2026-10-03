@@ -22,20 +22,20 @@ const Learning = () => {
         {currentlyLearning.map((block, index) => (
           <div
             key={block.topic}
-            className="card-surface fade-in-reveal rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 md:p-6"
+            className="card-surface fade-in-reveal rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
             style={{ "--reveal-delay": `${index * 90}ms` }}
           >
             <h3 className="mb-3 text-sm font-semibold text-[var(--color-fg)]">
               {block.topic}
             </h3>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-wrap gap-2">
               {block.items.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-sm text-[var(--color-muted)]"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-zinc-300 transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white/10"
                 >
                   <span
-                    className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[var(--color-accent)]"
+                    className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"
                     aria-hidden="true"
                   />
                   {item}
@@ -62,6 +62,9 @@ const Learning = () => {
           ))}
         </ol>
       </div>
+      
+      {/* Gradient Divider */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mt-8" />
     </section>
   );
 };
