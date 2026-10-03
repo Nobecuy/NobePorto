@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Lenis from 'lenis';
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
@@ -12,6 +13,24 @@ const THEME_STORAGE_KEY = "theme";
 // View counter now fully integrated into the new Live Analytics Stats dashboard section below.
 
 function App() {
+  // Smooth Scroll
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
+  }, []);
+
   const [theme, setTheme] = useState(() => {
     if (typeof window === "undefined") return "light";
 
@@ -117,9 +136,11 @@ function App() {
       />
       <main className="page-wrap">
         <Hero />
-        <hr className="divider" />
+        <div className="bg-gradient-to-r from-transparent via-white/10 to-transparent h-[1px] my-12" />
         <Projects />
+        <div className="bg-gradient-to-r from-transparent via-white/10 to-transparent h-[1px] my-12" />
         <Learning />
+        <div className="bg-gradient-to-r from-transparent via-white/10 to-transparent h-[1px] my-12" />
         <About />
       </main>
 

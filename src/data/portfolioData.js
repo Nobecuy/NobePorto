@@ -112,6 +112,10 @@ export const portfolioData = {
       demo: "https://perspective-architect-web-chi.vercel.app/",
       featured: true,
       year: "2026",
+      badges: [
+        { text: "AI-Assisted Build", type: "ai" },
+        { text: "Rapid Prototype", type: "speed" }
+      ],
     },
 
     {
@@ -126,6 +130,10 @@ export const portfolioData = {
       demo: "https://knit-house.vercel.app/",
       featured: true,
       year: "2026",
+      badges:  [
+        { text: "AI-Assisted Build", type: "ai" },
+        { text: "Rapid Prototype", type: "speed" }
+      ],  
     },
 
     {
@@ -140,6 +148,10 @@ export const portfolioData = {
       demo: "https://web-travel-kappa.vercel.app/",
       featured: true,
       year: "2026",
+      badges:  [
+        { text: "AI-Assisted Build", type: "ai" },
+        { text: "Rapid Prototype", type: "speed" }
+      ],
     },
 
     {
@@ -154,6 +166,10 @@ export const portfolioData = {
       demo: "https://lumina-studio-neon.vercel.app/",
       featured: true,
       year: "2026",
+      badges:  [
+        { text: "AI-Assisted Build", type: "ai" },
+        { text: "Rapid Prototype", type: "speed" }
+      ],
     },
     {
       id: 4,
@@ -167,6 +183,10 @@ export const portfolioData = {
       demo: "https://cafe-example-mu.vercel.app/",
       featured: true,
       year: "2026",
+      badges: [
+        { text: "AI-Assisted Build", type: "ai" },
+        { text: "Rapid Prototype", type: "speed" }
+      ],
     },
     {
       id: 5,
@@ -180,6 +200,10 @@ export const portfolioData = {
       demo: "https://cafe-example-premium.vercel.app/",
       featured: true,
       year: "2026",
+      badges: [
+        { text: "AI-Assisted Build", type: "ai" },
+        { text: "Rapid Prototype", type: "speed" }
+      ],
     },
   ],
 };

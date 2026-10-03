@@ -77,12 +77,12 @@ const Stats = () => {
         </div>
       </header>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
         {/* Card 1: Total Pengunjung */}
-        <div className="card-surface rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex flex-col justify-between min-h-[110px] shadow-[var(--shadow-elevated)] backdrop-blur-md transition-all duration-300 hover:border-[var(--color-border-hover)] hover:scale-[1.02]">
-          <span className="text-[11px] font-medium text-[var(--color-muted)] uppercase tracking-wider">Total Visitors</span>
+        <div className="bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 flex flex-col justify-between min-h-[110px]">
+          <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">Total Visitors</span>
           <div className="mt-2 flex flex-col">
-            <span className="text-2xl font-bold tracking-tight text-[var(--color-fg)] tabular-nums">
+            <span className="text-2xl font-bold tracking-tight text-white tabular-nums">
               {views === null ? "..." : views.toLocaleString("id-ID")}
             </span>
             <span className="text-[10px] text-emerald-500 font-medium flex items-center gap-1 mt-1">
@@ -92,10 +92,10 @@ const Stats = () => {
         </div>
 
         {/* Card 2: Kecepatan Load */}
-        <div className="card-surface rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex flex-col justify-between min-h-[110px] shadow-[var(--shadow-elevated)] backdrop-blur-md transition-all duration-300 hover:border-[var(--color-border-hover)] hover:scale-[1.02]">
-          <span className="text-[11px] font-medium text-[var(--color-muted)] uppercase tracking-wider">Load Time</span>
+        <div className="bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 flex flex-col justify-between min-h-[110px]">
+          <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">Load Time</span>
           <div className="mt-2 flex flex-col">
-            <span className="text-2xl font-bold tracking-tight text-[var(--color-fg)] tabular-nums">
+            <span className="text-2xl font-bold tracking-tight text-white tabular-nums">
               {displayLoadTime}
             </span>
             <span className="text-[10px] text-emerald-500 font-medium mt-1">
@@ -105,24 +105,24 @@ const Stats = () => {
         </div>
 
         {/* Card 3: Tech Stack */}
-        <div className="card-surface rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex flex-col justify-between min-h-[110px] shadow-[var(--shadow-elevated)] backdrop-blur-md transition-all duration-300 hover:border-[var(--color-border-hover)] hover:scale-[1.02]">
-          <span className="text-[11px] font-medium text-[var(--color-muted)] uppercase tracking-wider">Infrastruktur</span>
+        <div className="bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 flex flex-col justify-between min-h-[110px]">
+          <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">Infrastruktur</span>
           <div className="mt-2 flex flex-col">
-            <span className="text-base font-semibold text-[var(--color-fg)]">Vercel Edge</span>
-            <span className="text-[10px] text-[var(--color-muted)] mt-1">
+            <span className="text-base font-semibold text-white">Vercel Edge</span>
+            <span className="text-[10px] text-zinc-400 mt-1">
               React + Tailwind v4
             </span>
           </div>
         </div>
 
         {/* Card 4: Status Build */}
-        <div className="card-surface rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex flex-col justify-between min-h-[110px] shadow-[var(--shadow-elevated)] backdrop-blur-md transition-all duration-300 hover:border-[var(--color-border-hover)] hover:scale-[1.02]">
-          <span className="text-[11px] font-medium text-[var(--color-muted)] uppercase tracking-wider">Build Status</span>
+        <div className="bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:border-white/30 hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 flex flex-col justify-between min-h-[110px]">
+          <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">Build Status</span>
           <div className="mt-2 flex flex-col">
             <span className="text-sm font-semibold text-emerald-500 flex items-center gap-1">
               ✔ Deploy Passed
             </span>
-            <span className="text-[10px] text-[var(--color-muted)] mt-1">
+            <span className="text-[10px] text-zinc-400 mt-1">
               Verified Production
             </span>
           </div>
