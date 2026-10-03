@@ -113,6 +113,13 @@
     min-height: 100vh;
     line-height: 1.6;
     transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: none;
+  }
+
+  @media (pointer: coarse) {
+    body {
+      cursor: auto;
+    }
   }
 
   ::selection {

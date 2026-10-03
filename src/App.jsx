@@ -7,6 +7,7 @@ import Learning from "./components/Learning";
 import About from "./components/About";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
+import CustomCursor from "./components/CustomCursor";
 import { Analytics } from "@vercel/analytics/react";
 
 const THEME_STORAGE_KEY = "theme";
@@ -130,6 +131,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)]">
+      <CustomCursor />
       <Header
         activeSection={activeSection}
         theme={theme}
