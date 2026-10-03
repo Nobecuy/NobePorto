@@ -32,7 +32,7 @@ const Footer = () => {
     
     try {
       // Using Formspree with actual email endpoint
-      const response = await fetch("https://formspree.io/f/xnnqkjaq", {
+      const response = await fetch("https://formspree.io/f/xbglnjwr", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
